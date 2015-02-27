@@ -8,15 +8,6 @@ import (
 	"github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 )
 
-func main() {
-	t, _ := time.Parse("2014-01-28T00:00:00Z", "2014-01-28T00:00:00Z")
-	entries := []entry{
-		entry{Server: testServer, Region: "IAD", WindowStart: t, WindowEnd: t, GenType: "First Gen"},
-		entry{Server: testServer, Region: "IAD", WindowStart: t, WindowEnd: t, GenType: "First Gen"},
-	}
-	outputTabular(entries)
-}
-
 type entry struct {
 	Server      servers.Server
 	Region      string
@@ -31,7 +22,7 @@ var testServer = servers.Server{
 }
 
 func parseTime(t time.Time) string {
-	return t.Format("Mon 02 Jan 15:04")
+	return t.Format("02 Jan 15:04")
 }
 
 func elide(value string) string {
@@ -46,16 +37,11 @@ func hashes(num int) string {
 }
 
 func outputTabular(entries []entry) {
-	fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-43s |\n", hashes(10), hashes(6), hashes(36), hashes(20), hashes(43))
-	fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-43s |\n", "Generation", "Region", "Server ID", "Server Name", "Reboot Window")
-	fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-43s |\n", hashes(10), hashes(6), hashes(36), hashes(20), hashes(43))
+	fmt.Printf("| %-15s | %-36s | %-20s | %-27s | %-27s |\n", "Type", "Server ID", "Server Name", "Reboot Window (UTC)", "Reboot Window (Local)")
+	fmt.Printf("| %-15s | %-36s | %-20s | %-27s | %-27s |\n", hashes(15), hashes(36), hashes(20), hashes(27), hashes(27))
 	for _, s := range entries {
-		fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-16s - %-16s %-7s |\n",
-			s.GenType, s.Region, s.Server.ID, elide(s.Server.Name), parseTime(s.WindowStart),
-			parseTime(s.WindowEnd), "(UTC)")
-
-		fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-16s - %-16s %-7s |\n", "",
-			"", "", "", parseTime(s.WindowStart.Local()), parseTime(s.WindowEnd.Local()), "(Local)")
-		fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-43s |\n", hashes(10), hashes(6), hashes(36), hashes(20), hashes(43))
+		fmt.Printf("| %-9s (%s) | %-36s | %-20s | %-12s - %-12s | %-12s - %-12s |\n", s.GenType, s.Region,
+			s.Server.ID, elide(s.Server.Name), parseTime(s.WindowStart), parseTime(s.WindowEnd),
+			parseTime(s.WindowStart.Local()), parseTime(s.WindowEnd.Local()))
 	}
 }
