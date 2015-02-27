@@ -36,7 +36,7 @@ func main() {
 
 	provider, err := rackspace.AuthenticatedClient(opts)
 	if err != nil {
-		fmt.Printf("Unable to authenticate: %v", err)
+		fmt.Printf("Unable to authenticate: %v\n", err)
 		os.Exit(1)
 	}
 
