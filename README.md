@@ -1,4 +1,4 @@
-#cs-reboot-info
+# cs-reboot-info
 
 This is a Rackspace tool to identify Cloud Servers that have a scheduled automated reboot window. Cloud Servers may have a scheduled reboot in the case of routine or critical system maintenance. 
 
@@ -10,11 +10,11 @@ The tool source is OS independent (written in Go) and binaries are available for
 
 The format of the metadata key is:
 
-
-| Key | Value  (example)|
-|--------------------------|
+```
+| Key               | Value  (example)                          |
+|-------------------|-------------------------------------------|
 | rax:reboot_window | 2014-01-28T00:00:00Z;2014-01-28T03:00:00Z |
-
+```
 
 The value is a semi-colon separated time range, in UTC format. 
 
@@ -47,6 +47,7 @@ If you are a Windows user, you can download the tool from: https://github.com/cs
 ## Building from source
 
 ### Prerequisites
+
 * A working Go installation: https://golang.org/doc/install
 * GopherCloud: https://github.com/rackspace/gophercloud
 
