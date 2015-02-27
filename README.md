@@ -48,26 +48,6 @@ Or download from https://github.com/cs-reboot-info/bin/osx/cs-reboot-info
 
 If you are a Windows user, you can download the tool from: https://github.com/cs-reboot-info/bin/windows/cs-reboot-info
 
-## Building from source
-
-### Prerequisites
-
-* A working [Go installation](https://golang.org/doc/install).
-* A healthy [Go workspace](https://golang.org/doc/code.html#Organization).
-
-Clone the github repo as normal, and run:
-
-```bash
-go get github.com/rackerlabs/cs-reboot-info
-cd ${GOPATH}/src/github.com/rackerlabs/cs-reboot-info
-
-# Fetch dependencies into your ${GOPATH}
-go get .
-
-# Build and install the binary to ${GOPATH}/bin
-go install .
-```
-
 ## Using the tool
 
 **Usage:**
@@ -93,6 +73,26 @@ cs-reboot-info [--csv] username apikey
 generation, region, server_uuid, server_name, reboot_window_start_UTC, reboot_window_end_UTC, reboot_window_start_local, reboot_window_end_local
 first,DFW,d7b47a17-1552-4dcd-8b7b-831fddd73c42,MyFGServer,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00
 next,IAD,4da4a108-99c3-448a-8791-0e3fa81cbc98,MyNGServer,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00
+```
+
+## Building from source
+
+### Prerequisites
+
+* A working [Go installation](https://golang.org/doc/install).
+* A healthy [Go workspace](https://golang.org/doc/code.html#Organization).
+
+Clone the github repo as normal, and run:
+
+```bash
+go get github.com/rackerlabs/cs-reboot-info
+cd ${GOPATH}/src/github.com/rackerlabs/cs-reboot-info
+
+# Fetch dependencies into your ${GOPATH}
+go get .
+
+# Build and install the binary to ${GOPATH}/bin
+go install .
 ```
 
 
