@@ -31,22 +31,25 @@ The *cs-reboot-info* tool is a single binary package (per platform), with no add
 
 If you are a Linux or OS X user, you can download the binary directly from Github using the terminal:
 
-**Linux**: 
+**Linux**:
+
 ```bash
-wget https://github.com/cs-reboot-info/bin/linux/cs-reboot-info
+wget https://raw.githubusercontent.com/rackerlabs/cs-reboot-info/master/bin/linux/cs-reboot-info
 ```
 
-Or download from https://github.com/cs-reboot-info/bin/linux/cs-reboot-info
+Or [download the binary directly](https://raw.githubusercontent.com/rackerlabs/cs-reboot-info/master/bin/linux/cs-reboot-info) and put it anywhere on your `${PATH}`.
 
 **Mac OS X**: 
+
 ```bash
-curl https://github.com/cs-reboot-info/bin/osx/cs-reboot-info
+curl https://raw.githubusercontent.com/rackerlabs/cs-reboot-info/master/bin/osx/cs-reboot-info -o cs-reboot-info
 ```
-Or download from https://github.com/cs-reboot-info/bin/osx/cs-reboot-info
+
+Or [download the binary directly](https://raw.githubusercontent.com/rackerlabs/cs-reboot-info/master/bin/osx/cs-reboot-info) and put it anywhere on your `${PATH}`.
 
 ### Windows 
 
-If you are a Windows user, you can download the tool from: https://github.com/cs-reboot-info/bin/windows/cs-reboot-info
+If you are a Windows user, you can [download the binary](https://github.com/cs-reboot-info/bin/windows/cs-reboot-info) and run it from *cmd.exe*.
 
 ## Using the tool
 
