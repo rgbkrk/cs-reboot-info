@@ -45,7 +45,18 @@ func main() {
 		fmt.Println("Dummy switch so Go shuts up about unused variables!")
 	}
 
-	// Iterate through regions
+	// Iterate through regions with an NG compute endpoint. Collect data about each server.
+	for _, region := range regions {
+		compute, err := rackspace.NewComputeV2(provider, gophercloud.EndpointOpts{
+			Region: region,
+		})
+		if err != nil {
+			fmt.Printf("Unable to locate a compute endpoint in region %s: %v\n", region, err)
+			continue
+		}
+
+		//
+	}
 
 	// Iterate through servers in each region
 
