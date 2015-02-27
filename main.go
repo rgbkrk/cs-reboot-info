@@ -112,7 +112,8 @@ func main() {
 	}
 
 	// Iterate through regions with an FG compute endpoint. Collect data about each server.
-	for _, region := range regions {
+	fgRegions := []string{"DFW"}
+	for _, region := range fgRegions {
 		compute, err := rackspace.NewComputeV1(provider, gophercloud.EndpointOpts{
 			Region: region,
 		})
