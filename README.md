@@ -29,16 +29,20 @@ The *cs-reboot-info* tool is a single binary package (per platform), with no add
 
 ### Linux, Mac OS X 
 
-If you are a Linux or OS X user, you can download the binary directly from Github using wget:
+If you are a Linux or OS X user, you can download the binary directly from Github using the terminal:
 
 **Linux**: 
 ```bash
 wget https://github.com/cs-reboot-info/bin/linux/cs-reboot-info
 ```
+
+Or download from https://github.com/cs-reboot-info/bin/linux/cs-reboot-info
+
 **Mac OS X**: 
 ```bash
-wget https://github.com/cs-reboot-info/bin/osx/cs-reboot-info
+curl https://github.com/cs-reboot-info/bin/osx/cs-reboot-info
 ```
+Or download from https://github.com/cs-reboot-info/bin/osx/cs-reboot-info
 
 ### Windows 
 
@@ -79,9 +83,9 @@ cs-reboot-info [--csv] username apikey
 
 ### Sample output: CSV
 ```
-generation, region, server uuid, server name, reboot time window UTC, reboot time window local
-first,DFW,d7b47a17-1552-4dcd-8b7b-831fddd73c42,MyFGServer,01 Jan 00:00-01 Jan 00:00,01 Jan 00:00-01 Jan 00:00
-next,IAD,4da4a108-99c3-448a-8791-0e3fa81cbc98,MyNGServer,01 Jan 00:00-01 Jan 00:00,01 Jan 00:00-01 Jan 00:00
+generation, region, server_uuid, server_name, reboot_window_start_UTC, reboot_window_end_UTC, reboot_window_start_local, reboot_window_end_local
+first,DFW,d7b47a17-1552-4dcd-8b7b-831fddd73c42,MyFGServer,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00
+next,IAD,4da4a108-99c3-448a-8791-0e3fa81cbc98,MyNGServer,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00
 ```
 
 
