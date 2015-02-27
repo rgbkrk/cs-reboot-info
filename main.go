@@ -122,7 +122,7 @@ func main() {
 	}
 
 	if numUnaffected > 0 {
-		fmt.Printf("Metadatum %s was not present in the result for %d of your servers", metadataKey, numUnaffected)
+		fmt.Printf("%d of your servers will not require a reboot. The following %d servers will need to be rebooted", numUnaffected, len(entries))
 	}
 
 	if outputToCSV {
