@@ -47,9 +47,10 @@ func main() {
 
 	fmt.Printf("Regions with a compute endpoint: %s\n", strings.Join(regions, ", "))
 	if fg {
-		fmt.Println("You do have a first-gen endpoint, too.")
+		fmt.Println("You have a first-gen endpoint, too.")
 	}
 
+	var numUnaffected int
 	var entries []entry
 
 	// Iterate through regions with an NG compute endpoint. Collect data about each server.
@@ -71,6 +72,10 @@ func main() {
 			for _, server := range s {
 				entry, err := ConstructEntry(server, "Next Gen", region)
 				if err != nil {
+					if strings.Contains(err.Error(), "not present") {
+						numUnaffected++
+						continue
+					}
 					fmt.Printf("%s\n", err)
 					continue
 				} else {
@@ -99,6 +104,10 @@ func main() {
 		for _, server := range s {
 			entry, err := ConstructEntry(server, "First Gen", "DFW")
 			if err != nil {
+				if strings.Contains(err.Error(), "not present") {
+					numUnaffected++
+					continue
+				}
 				fmt.Printf("%s\n", err)
 				continue
 			} else {
@@ -112,7 +121,7 @@ func main() {
 		fmt.Printf("Error listing servers: %+v\n", err)
 	}
 
-	// Pull the metadata key
+	fmt.Printf("Metadatum %s was not present in the result for %d of your servers", metadataKey, numUnaffected)
 
 	if outputToCSV {
 		outputCSV(entries)
