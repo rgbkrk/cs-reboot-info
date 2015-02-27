@@ -7,20 +7,19 @@ import (
 	"strings"
 	"time"
 
+	"github.com/jrperritt/gophercloud/rackspace"
+	rsV1Servers "github.com/jrperritt/gophercloud/rackspace/compute/v1/servers"
 	"github.com/rackspace/gophercloud"
-	osservers "github.com/rackspace/gophercloud/openstack/compute/v2/servers"
+	osV2Servers "github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 	"github.com/rackspace/gophercloud/pagination"
-	"github.com/rackspace/gophercloud/rackspace"
-	"github.com/rackspace/gophercloud/rackspace/compute/v2/servers"
+	rsV2Servers "github.com/rackspace/gophercloud/rackspace/compute/v2/servers"
 	"github.com/rackspace/gophercloud/rackspace/identity/v2/tokens"
 )
 
 const metadataTimeFmt = "2006-01-02T15:04:05Z"
 
 func main() {
-	outputCSV := *flag.Bool("csv", false, "Output a CSV file")
-	useLocaltime := *flag.Bool("localtime", false, "Use local timestamps instead of UTC")
-
+	outputToCSV := *flag.Bool("csv", false, "Output a CSV file")
 	flag.Parse()
 
 	if flag.NArg() != 2 {
@@ -42,13 +41,9 @@ func main() {
 
 	regions, fg := Regions(provider, opts)
 
-	fmt.Printf("Regions with a compute endpoint: %s.\n", strings.Join(regions, ", "))
+	fmt.Printf("Regions with a compute endpoint: %s\n", strings.Join(regions, ", "))
 	if fg {
 		fmt.Println("You do have a first-gen endpoint, too.")
-	}
-
-	if useLocaltime {
-		fmt.Println("Dummy switch so Go shuts up about unused variables!")
 	}
 
 	var entries []entry
@@ -59,18 +54,18 @@ func main() {
 			Region: region,
 		})
 		if err != nil {
-			fmt.Printf("Unable to locate a compute endpoint in region %s: %v\n", region, err)
+			fmt.Printf("Unable to locate a v2 compute endpoint in region %s: %v\n", region, err)
 			continue
 		}
 
-		err = servers.List(compute, nil).EachPage(func(page pagination.Page) (bool, error) {
-			s, err := servers.ExtractServers(page)
+		err = rsV2Servers.List(compute, nil).EachPage(func(page pagination.Page) (bool, error) {
+			s, err := osV2Servers.ExtractServers(page)
 			if err != nil {
 				return false, err
 			}
 
 			for _, server := range s {
-				md, err := osservers.Metadatum(compute, server.ID, "rax:reboot_window").Extract()
+				md, err := osV2Servers.Metadatum(compute, server.ID, "rax:reboot_window").Extract()
 				if err != nil {
 					fmt.Printf("Unable to retrieve rax:reboot_window metadatum for server %s: %v\n", server.ID, err)
 					continue
@@ -116,11 +111,69 @@ func main() {
 		})
 	}
 
-	outputTabular(entries)
+	// Iterate through regions with an FG compute endpoint. Collect data about each server.
+	for _, region := range regions {
+		compute, err := rackspace.NewComputeV1(provider, gophercloud.EndpointOpts{
+			Region: region,
+		})
+		if err != nil {
+			fmt.Printf("Unable to locate a v1 compute endpoint in region %s: %v\n", region, err)
+			continue
+		}
 
-	// Output a CSV row
-	if outputCSV {
-		fmt.Println("I would be writing a CSV file here!")
+		err = rsV1Servers.List(compute, rsV1Servers.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
+			s, err := osV2Servers.ExtractServers(page)
+			if err != nil {
+				return false, err
+			}
+
+			for _, server := range s {
+				windowString, ok := server.Metadata["rax:reboot_window"]
+				if !ok {
+					fmt.Printf("Metadatum rax:reboot_window was not present in the result for server %s.\n", server.ID)
+					continue
+				}
+
+				// Expected format: 2014-01-28T00:00:00Z;2014-01-28T03:00:00Z
+
+				parts := strings.Split(windowString.(string), ";")
+				if len(parts) != 2 {
+					fmt.Printf("Unexpected metadatum format for server %s: %s\n", server.ID, windowString)
+					continue
+				}
+
+				start, err := time.Parse(metadataTimeFmt, parts[0])
+				if err != nil {
+					fmt.Printf("Unable to parse window start time for server %s: %s\n", server.ID, parts[0])
+					continue
+				}
+
+				end, err := time.Parse(metadataTimeFmt, parts[1])
+				if err != nil {
+					fmt.Printf("Unable to parse window end time for server %s: %s\n", server.ID, parts[1])
+					continue
+				}
+
+				entry := entry{
+					Server:      server,
+					Region:      region,
+					GenType:     "First Gen",
+					WindowStart: start,
+					WindowEnd:   end,
+				}
+				entries = append(entries, entry)
+			}
+
+			return true, nil
+		})
+	}
+
+	// Pull the metadata key
+
+	if outputToCSV {
+		outputCSV(entries)
+	} else {
+		outputTabular(entries)
 	}
 }
 
@@ -150,9 +203,4 @@ func Regions(provider *gophercloud.ProviderClient, opts gophercloud.AuthOptions)
 		}
 	}
 	return regions, fg
-}
-
-// ShowTime renders a time as both UTC and guessed local TZ
-func ShowTime(ts time.Time) string {
-	return ""
 }
