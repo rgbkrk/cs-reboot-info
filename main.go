@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"time"
@@ -11,7 +12,17 @@ import (
 )
 
 func main() {
-	username, apiKey := "", ""
+	outputCSV := *flag.Bool("csv", false, "Output a CSV file")
+	useLocaltime := *flag.Bool("localtime", false, "Use local timestamps instead of UTC")
+
+	flag.Parse()
+
+	if flag.NArg() != 2 {
+		fmt.Println("You must supply a username and API key after all other args.")
+		os.Exit(1)
+	}
+
+	username, apiKey := flag.Arg(0), flag.Arg(1)
 
 	opts := gophercloud.AuthOptions{
 		Username: username,
@@ -27,6 +38,10 @@ func main() {
 
 	fmt.Printf("Regions with a compute endpoint: %#v\n", regions)
 
+	if useLocaltime {
+		fmt.Println("Dummy switch so Go shuts up about unused variables!")
+	}
+
 	// Iterate through regions
 
 	// Iterate through servers in each region
@@ -34,6 +49,9 @@ func main() {
 	// Pull the metadata key
 
 	// Output a CSV row
+	if outputCSV {
+		fmt.Println("I would be writing a CSV file here!")
+	}
 }
 
 // Regions acquires the service catalog and returns a slice of every region that contains a first-
