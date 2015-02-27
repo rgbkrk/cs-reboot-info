@@ -17,6 +17,11 @@ func main() {
 
 	flag.Parse()
 
+	if flag.NArg() != 2 {
+		fmt.Println("You must supply a username and API key after all other args.")
+		os.Exit(1)
+	}
+
 	username, apiKey := flag.Arg(0), flag.Arg(1)
 
 	opts := gophercloud.AuthOptions{
