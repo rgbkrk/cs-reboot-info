@@ -92,33 +92,33 @@ func main() {
 		Availability: gophercloud.AvailabilityPublic,
 	})
 	if err != nil {
-		fmt.Printf("Unable to locate a v1 compute endpoint: %v\n", err)
-	}
-
-	err = rsV1Servers.List(compute, rsV1Servers.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
-		s, err := osV2Servers.ExtractServers(page)
-		if err != nil {
-			return false, err
-		}
-
-		for _, server := range s {
-			entry, err := ConstructEntry(server, "First Gen", "DFW")
+		fmt.Printf("Unable to locate a v1 compute endpoint. Skipping...")
+	} else {
+		err = rsV1Servers.List(compute, rsV1Servers.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
+			s, err := osV2Servers.ExtractServers(page)
 			if err != nil {
-				if strings.Contains(err.Error(), "not present") {
-					numUnaffected++
-					continue
-				}
-				fmt.Printf("%s\n", err)
-				continue
-			} else {
-				entries = append(entries, *entry)
+				return false, err
 			}
-		}
 
-		return true, nil
-	})
-	if err != nil {
-		fmt.Printf("Error listing servers: %+v\n", err)
+			for _, server := range s {
+				entry, err := ConstructEntry(server, "First Gen", "DFW")
+				if err != nil {
+					if strings.Contains(err.Error(), "not present") {
+						numUnaffected++
+						continue
+					}
+					fmt.Printf("%s\n", err)
+					continue
+				} else {
+					entries = append(entries, *entry)
+				}
+			}
+
+			return true, nil
+		})
+		if err != nil {
+			fmt.Printf("Error listing servers: %+v\n", err)
+		}
 	}
 
 	fmt.Printf("Metadatum %s was not present in the result for %d of your servers", metadataKey, numUnaffected)
