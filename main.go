@@ -121,7 +121,9 @@ func main() {
 		}
 	}
 
-	fmt.Printf("Metadatum %s was not present in the result for %d of your servers", metadataKey, numUnaffected)
+	if numUnaffected > 0 {
+		fmt.Printf("Metadatum %s was not present in the result for %d of your servers", metadataKey, numUnaffected)
+	}
 
 	if outputToCSV {
 		outputCSV(entries)
