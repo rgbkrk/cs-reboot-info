@@ -4,7 +4,6 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
-	"strings"
 )
 
 func outputCSV(entries []entry) {
@@ -15,11 +14,9 @@ func outputCSV(entries []entry) {
 	}
 	defer csvFile.Close()
 	writer := csv.NewWriter(csvFile)
-	writer.Write([]string{"Generation", "Region", "Server UUID", "Server Name", "Reboot Window (UTC)", "Reboot Window (Local)"})
+	writer.Write([]string{"generation", "region", "server_uuid", "server_name", "reboot_window_start_UTC", "reboot_window_end_UTC", "reboot_window_start_local", "reboot_window_end_local"})
 	for _, e := range entries {
-		utcTime := strings.Join([]string{e.WindowStart.String(), e.WindowEnd.String()}, " - ")
-		locTime := strings.Join([]string{e.WindowStart.Local().String(), e.WindowEnd.Local().String()}, " - ")
-		record := []string{e.GenType, e.Region, e.Server.ID, e.Server.Name, utcTime, locTime}
+		record := []string{e.GenType, e.Region, e.Server.ID, e.Server.Name, e.WindowStart.String(), e.WindowEnd.String(), e.WindowStart.Local().String(), e.WindowEnd.Local().String()}
 		err := writer.Write(record)
 		if err != nil {
 			fmt.Println("Error writing row to CSV: ", err)
