@@ -73,9 +73,9 @@ func main() {
 				if err != nil {
 					fmt.Printf("%s\n", err)
 					continue
+				} else {
+					entries = append(entries, *entry)
 				}
-
-				entries = append(entries, *entry)
 			}
 
 			return true, nil
