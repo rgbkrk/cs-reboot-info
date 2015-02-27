@@ -8,6 +8,15 @@ import (
 	"github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 )
 
+func main() {
+	t, _ := time.Parse("2014-01-28T00:00:00Z", "2014-01-28T00:00:00Z")
+	entries := []entry{
+		entry{Server: testServer, Region: "IAD", WindowStart: t, WindowEnd: t, GenType: "First Gen"},
+		entry{Server: testServer, Region: "IAD", WindowStart: t, WindowEnd: t, GenType: "First Gen"},
+	}
+	outputTabular(entries)
+}
+
 type entry struct {
 	Server      servers.Server
 	Region      string
@@ -37,11 +46,16 @@ func hashes(num int) string {
 }
 
 func outputTabular(entries []entry) {
-	fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-35s | %-35s |\n", "Generation", "Region", "Server ID", "Server Name", "Reboot Window (UTC)", "Reboot Window (Local)")
-	fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-35s | %-35s |\n", hashes(10), hashes(6), hashes(36), hashes(20), hashes(35), hashes(35))
+	fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-43s |\n", hashes(10), hashes(6), hashes(36), hashes(20), hashes(43))
+	fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-43s |\n", "Generation", "Region", "Server ID", "Server Name", "Reboot Window")
+	fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-43s |\n", hashes(10), hashes(6), hashes(36), hashes(20), hashes(43))
 	for _, s := range entries {
-		fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-16s - %-16s | %-16s - %-16s |\n", s.GenType, s.Region,
-			s.Server.ID, elide(s.Server.Name), parseTime(s.WindowStart), parseTime(s.WindowEnd),
-			parseTime(s.WindowStart.Local()), parseTime(s.WindowEnd.Local()))
+		fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-16s - %-16s %-7s |\n",
+			s.GenType, s.Region, s.Server.ID, elide(s.Server.Name), parseTime(s.WindowStart),
+			parseTime(s.WindowEnd), "(UTC)")
+
+		fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-16s - %-16s %-7s |\n", "",
+			"", "", "", parseTime(s.WindowStart.Local()), parseTime(s.WindowEnd.Local()), "(Local)")
+		fmt.Printf("| %-10s | %-6s | %-36s | %-20s | %-43s |\n", hashes(10), hashes(6), hashes(36), hashes(20), hashes(43))
 	}
 }
