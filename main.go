@@ -112,7 +112,9 @@ func main() {
 	}
 
 	// Iterate through regions with an FG compute endpoint. Collect data about each server.
-	compute, err := rackspace.NewComputeV1(provider, gophercloud.EndpointOpts{})
+	compute, err := rackspace.NewComputeV1(provider, gophercloud.EndpointOpts{
+		Availability: gophercloud.AvailabilityPublic,
+	})
 	if err != nil {
 		fmt.Printf("Unable to locate a v1 compute endpoint: %v\n", err)
 	}
@@ -162,6 +164,9 @@ func main() {
 
 		return true, nil
 	})
+	if err != nil {
+		fmt.Printf("Error listing servers: %+v\n", err)
+	}
 
 	// Pull the metadata key
 
