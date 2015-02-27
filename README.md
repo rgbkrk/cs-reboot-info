@@ -52,13 +52,20 @@ If you are a Windows user, you can download the tool from: https://github.com/cs
 
 ### Prerequisites
 
-* A working Go installation: https://golang.org/doc/install
-* GopherCloud: https://github.com/rackspace/gophercloud
+* A working [Go installation](https://golang.org/doc/install).
+* A healthy [Go workspace](https://golang.org/doc/code.html#Organization).
 
 Clone the github repo as normal, and run:
 
 ```bash
-go cs-reboot-info.go
+go get github.com/rackerlabs/cs-reboot-info
+cd ${GOPATH}/src/github.com/rackerlabs/cs-reboot-info
+
+# Fetch dependencies into your ${GOPATH}
+go get .
+
+# Build and install the binary to ${GOPATH}/bin
+go install .
 ```
 
 ## Using the tool
