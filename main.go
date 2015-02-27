@@ -69,46 +69,13 @@ func main() {
 			}
 
 			for _, server := range s {
-				md, err := osV2Servers.Metadatum(compute, server.ID, "rax:reboot_window").Extract()
+				entry, err := ConstructEntry(server, "Next Gen", region)
 				if err != nil {
-					fmt.Printf("Unable to retrieve rax:reboot_window metadatum for server %s: %v\n", server.ID, err)
+					fmt.Printf("%s\n", err)
 					continue
 				}
 
-				windowString, ok := md["rax:reboot_window"]
-				if !ok {
-					fmt.Printf("Metadatum rax:reboot_window was not present in the result for server %s.\n", server.ID)
-					continue
-				}
-
-				// Expected format: 2014-01-28T00:00:00Z;2014-01-28T03:00:00Z
-
-				parts := strings.Split(windowString, ";")
-				if len(parts) != 2 {
-					fmt.Printf("Unexpected metadatum format for server %s: %s\n", server.ID, windowString)
-					continue
-				}
-
-				start, err := time.Parse(metadataTimeFmt, parts[0])
-				if err != nil {
-					fmt.Printf("Unable to parse window start time for server %s: %s\n", server.ID, parts[0])
-					continue
-				}
-
-				end, err := time.Parse(metadataTimeFmt, parts[1])
-				if err != nil {
-					fmt.Printf("Unable to parse window end time for server %s: %s\n", server.ID, parts[1])
-					continue
-				}
-
-				entry := entry{
-					Server:      server,
-					Region:      region,
-					GenType:     "Next Gen",
-					WindowStart: start,
-					WindowEnd:   end,
-				}
-				entries = append(entries, entry)
+				entries = append(entries, *entry)
 			}
 
 			return true, nil
