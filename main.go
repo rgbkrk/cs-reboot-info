@@ -16,7 +16,10 @@ import (
 	"github.com/rackspace/gophercloud/rackspace/identity/v2/tokens"
 )
 
-const metadataTimeFmt = "2006-01-02T15:04:05Z"
+const (
+	metadataKey     = "rax:reboot_window"
+	metadataTimeFmt = "2006-01-02T15:04:05Z"
+)
 
 func main() {
 	outputToCSV := *flag.Bool("csv", false, "Output a CSV file")
@@ -66,46 +69,13 @@ func main() {
 			}
 
 			for _, server := range s {
-				md, err := osV2Servers.Metadatum(compute, server.ID, "rax:reboot_window").Extract()
+				entry, err := ConstructEntry(server, "Next Gen", region)
 				if err != nil {
-					fmt.Printf("Unable to retrieve rax:reboot_window metadatum for server %s: %v\n", server.ID, err)
+					fmt.Printf("%s\n", err)
 					continue
+				} else {
+					entries = append(entries, *entry)
 				}
-
-				windowString, ok := md["rax:reboot_window"]
-				if !ok {
-					fmt.Printf("Metadatum rax:reboot_window was not present in the result for server %s.\n", server.ID)
-					continue
-				}
-
-				// Expected format: 2014-01-28T00:00:00Z;2014-01-28T03:00:00Z
-
-				parts := strings.Split(windowString, ";")
-				if len(parts) != 2 {
-					fmt.Printf("Unexpected metadatum format for server %s: %s\n", server.ID, windowString)
-					continue
-				}
-
-				start, err := time.Parse(metadataTimeFmt, parts[0])
-				if err != nil {
-					fmt.Printf("Unable to parse window start time for server %s: %s\n", server.ID, parts[0])
-					continue
-				}
-
-				end, err := time.Parse(metadataTimeFmt, parts[1])
-				if err != nil {
-					fmt.Printf("Unable to parse window end time for server %s: %s\n", server.ID, parts[1])
-					continue
-				}
-
-				entry := entry{
-					Server:      server,
-					Region:      region,
-					GenType:     "Next Gen",
-					WindowStart: start,
-					WindowEnd:   end,
-				}
-				entries = append(entries, entry)
 			}
 
 			return true, nil
@@ -127,40 +97,13 @@ func main() {
 		}
 
 		for _, server := range s {
-			windowString, ok := server.Metadata["rax:reboot_window"]
-			if !ok {
-				fmt.Printf("Metadatum rax:reboot_window was not present in the result for server %s.\n", server.ID)
-				continue
-			}
-
-			// Expected format: 2014-01-28T00:00:00Z;2014-01-28T03:00:00Z
-
-			parts := strings.Split(windowString.(string), ";")
-			if len(parts) != 2 {
-				fmt.Printf("Unexpected metadatum format for server %s: %s\n", server.ID, windowString)
-				continue
-			}
-
-			start, err := time.Parse(metadataTimeFmt, parts[0])
+			entry, err := ConstructEntry(server, "First Gen", "DFW")
 			if err != nil {
-				fmt.Printf("Unable to parse window start time for server %s: %s\n", server.ID, parts[0])
+				fmt.Printf("%s\n", err)
 				continue
+			} else {
+				entries = append(entries, *entry)
 			}
-
-			end, err := time.Parse(metadataTimeFmt, parts[1])
-			if err != nil {
-				fmt.Printf("Unable to parse window end time for server %s: %s\n", server.ID, parts[1])
-				continue
-			}
-
-			entry := entry{
-				Server:      server,
-				Region:      "DFW",
-				GenType:     "First Gen",
-				WindowStart: start,
-				WindowEnd:   end,
-			}
-			entries = append(entries, entry)
 		}
 
 		return true, nil
@@ -204,4 +147,43 @@ func Regions(provider *gophercloud.ProviderClient, opts gophercloud.AuthOptions)
 		}
 	}
 	return regions, fg
+}
+
+// ConstructEntry extracts the metadata key and builds an entry for a server.
+func ConstructEntry(server osV2Servers.Server, genType, region string) (*entry, error) {
+	window, ok := server.Metadata[metadataKey]
+	if !ok {
+		return nil, fmt.Errorf("Metadatum %s was not present in the result for server %s", metadataKey, server.ID)
+	}
+
+	windowString, ok := window.(string)
+	if !ok {
+		return nil, fmt.Errorf("Metadatum %s for server %s was not a string: %#v", metadataKey, server.ID, window)
+	}
+
+	// Expected format: 2014-01-28T00:00:00Z;2014-01-28T03:00:00Z
+
+	parts := strings.Split(windowString, ";")
+	if len(parts) != 2 {
+		return nil, fmt.Errorf("Unexpected metadatum format for server %s: %s", server.ID, windowString)
+	}
+
+	start, err := time.Parse(metadataTimeFmt, parts[0])
+	if err != nil {
+		return nil, fmt.Errorf("Unable to parse window start time for server %s: %s", server.ID, parts[0])
+	}
+
+	end, err := time.Parse(metadataTimeFmt, parts[1])
+	if err != nil {
+		return nil, fmt.Errorf("Unable to parse window end time for server %s: %s", server.ID, parts[1])
+	}
+
+	e := &entry{
+		Server:      server,
+		Region:      region,
+		GenType:     genType,
+		WindowStart: start,
+		WindowEnd:   end,
+	}
+	return e, nil
 }
