@@ -12,4 +12,4 @@ if ! which gox >/dev/null 2>&1 ; then
   echo "One-time gox setup is complete."
 fi
 
-gox
+gox -output "bin/{{.OS}}-{{.Arch}}/{{.Dir}}"
