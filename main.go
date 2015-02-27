@@ -7,7 +7,9 @@ import (
 	"time"
 
 	"github.com/rackspace/gophercloud"
+	"github.com/rackspace/gophercloud/pagination"
 	"github.com/rackspace/gophercloud/rackspace"
+	"github.com/rackspace/gophercloud/rackspace/compute/v2/servers"
 	"github.com/rackspace/gophercloud/rackspace/identity/v2/tokens"
 )
 
@@ -45,6 +47,8 @@ func main() {
 		fmt.Println("Dummy switch so Go shuts up about unused variables!")
 	}
 
+	var entries []entry
+
 	// Iterate through regions with an NG compute endpoint. Collect data about each server.
 	for _, region := range regions {
 		compute, err := rackspace.NewComputeV2(provider, gophercloud.EndpointOpts{
@@ -55,10 +59,26 @@ func main() {
 			continue
 		}
 
-		//
-	}
+		err = servers.List(compute, nil).EachPage(func(page pagination.Page) (bool, error) {
+			s, err := servers.ExtractServers(page)
+			if err != nil {
+				return false, err
+			}
 
-	// Iterate through servers in each region
+			for _, server := range s {
+				entry := entry{
+					Server:      server,
+					Region:      region,
+					GenType:     "v2",
+					WindowStart: time.Now(),
+					WindowEnd:   time.Now(),
+				}
+				entries = append(entries, entry)
+			}
+
+			return true, nil
+		})
+	}
 
 	// Pull the metadata key
 
