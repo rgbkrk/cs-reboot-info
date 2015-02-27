@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"time"
@@ -11,7 +12,11 @@ import (
 )
 
 func main() {
-	username, apiKey := "", ""
+	outputCSV := flag.Bool("-csv", false, "Output a CSV file")
+
+	flag.Parse()
+
+	username, apiKey := flag.Arg(0), flag.Arg(1)
 
 	opts := gophercloud.AuthOptions{
 		Username: username,
