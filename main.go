@@ -42,7 +42,7 @@ func main() {
 
 	regions, fg := Regions(provider, opts)
 
-	fmt.Printf("Regions with a compute endpoint: %#v\n", regions)
+	fmt.Printf("Regions with a compute endpoint: %s.\n", strings.Join(regions, ", "))
 	if fg {
 		fmt.Println("You do have a first-gen endpoint, too.")
 	}
@@ -116,7 +116,7 @@ func main() {
 		})
 	}
 
-	// Pull the metadata key
+	outputTabular(entries)
 
 	// Output a CSV row
 	if outputCSV {
