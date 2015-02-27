@@ -92,7 +92,7 @@ func main() {
 		Availability: gophercloud.AvailabilityPublic,
 	})
 	if err != nil {
-		fmt.Printf("Unable to locate a v1 compute endpoint: %v\n", err)
+		fmt.Printf("Unable to locate a v1 compute endpoint. Skipping...")
 	} else {
 		err = rsV1Servers.List(compute, rsV1Servers.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
 			s, err := osV2Servers.ExtractServers(page)
