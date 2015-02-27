@@ -37,6 +37,7 @@ func hashes(num int) string {
 }
 
 func outputTabular(entries []entry) {
+	fmt.Println("")
 	fmt.Printf("| %-15s | %-36s | %-20s | %-27s | %-27s |\n", "Type", "Server ID", "Server Name", "Reboot Window (UTC)", "Reboot Window (Local)")
 	fmt.Printf("| %-15s | %-36s | %-20s | %-27s | %-27s |\n", hashes(15), hashes(36), hashes(20), hashes(27), hashes(27))
 	for _, s := range entries {
