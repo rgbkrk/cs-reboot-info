@@ -32,7 +32,14 @@ func main() {
 
 	outputToCSV := flag.Bool("csv", false,
 		"Output a CSV file to 'cs-reboot-info-output.csv' in the current directory.")
+	outputVersion := flag.Bool("version", false,
+		"Report the version of this binary.")
 	flag.Parse()
+
+	if *outputVersion {
+		fmt.Printf("cs-reboot-info version %s\n", appVer)
+		os.Exit(0)
+	}
 
 	if flag.NArg() != 2 {
 		fmt.Println("You must supply a username and API key as the last two arguments.")
@@ -59,7 +66,8 @@ func main() {
 
 	fmt.Printf("Regions with a Cloud Servers endpoint: %s\n", strings.Join(regions, ", "))
 	if fg {
-		fmt.Println("Found both First and Next Generation endpoints.\n")
+		fmt.Println("Found both First and Next Generation endpoints.")
+		fmt.Println()
 	}
 
 	fgRegion := "DFW"
