@@ -16,7 +16,10 @@ func outputCSV(entries []entry) {
 	fmt.Printf("Writing output to %s\n", outputFile)
 	defer csvFile.Close()
 	writer := csv.NewWriter(csvFile)
-	writer.Write([]string{"generation", "region", "server_uuid", "server_name", "reboot_window_start_UTC", "reboot_window_end_UTC", "reboot_window_start_local", "reboot_window_end_local"})
+	err = writer.Write([]string{"generation", "region", "server_uuid", "server_name", "reboot_window_start_UTC", "reboot_window_end_UTC", "reboot_window_start_local", "reboot_window_end_local"})
+	if err != nil {
+		fmt.Println("Error writing header to CSV: ", err)
+	}
 	for _, e := range entries {
 		record := []string{e.GenType, e.Region, e.Server.ID, e.Server.Name, e.WindowStart.String(), e.WindowEnd.String(), e.WindowStart.Local().String(), e.WindowEnd.Local().String()}
 		err := writer.Write(record)
@@ -25,4 +28,5 @@ func outputCSV(entries []entry) {
 			return
 		}
 	}
+	writer.Flush()
 }
