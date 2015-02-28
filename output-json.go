@@ -16,7 +16,7 @@ type RebootRecord struct {
 }
 
 type RebootRecords struct {
-	Records []RebootRecord
+	Records []RebootRecord `json:"records"`
 }
 
 func outputJSON(entries []entry) {
