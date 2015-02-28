@@ -1,6 +1,6 @@
 # cs-reboot-info
 
-This is a Rackspace tool to identify Cloud Servers that have a scheduled automated reboot window. Cloud Servers may have a scheduled reboot in the case of routine or critical system maintenance.
+This is a Rackspace tool to identify Cloud Servers that have a [scheduled automated reboot window](https://developer.rackspace.com/blog/cloud-servers-reboot-info/). Cloud Servers may have a scheduled reboot in the case of routine or critical system maintenance.
 
 The tool source is OS independent (written in Go) and binaries are available for Windows, Mac OS X, and Linux.
 
