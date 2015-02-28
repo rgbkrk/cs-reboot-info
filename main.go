@@ -10,10 +10,10 @@ import (
 	"github.com/rackspace/gophercloud"
 	osV2Servers "github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 	"github.com/rackspace/gophercloud/pagination"
+	"github.com/rackspace/gophercloud/rackspace"
 	rsV2Servers "github.com/rackspace/gophercloud/rackspace/compute/v2/servers"
 	"github.com/rackspace/gophercloud/rackspace/identity/v2/tokens"
-	"github.com/smashwilson/gophercloud/rackspace"
-	rsV1Servers "github.com/smashwilson/gophercloud/rackspace/compute/v1/servers"
+	rsV1Servers "github.com/smashwilson/gophercomputev1"
 )
 
 const (
@@ -98,7 +98,7 @@ func main() {
 	}
 
 	// Iterate through regions with an FG compute endpoint. Collect data about each server.
-	compute, err := rackspace.NewComputeV1(provider, gophercloud.EndpointOpts{
+	compute, err := rsV1Servers.NewComputeV1(provider, gophercloud.EndpointOpts{
 		Availability: gophercloud.AvailabilityPublic,
 	})
 	if err != nil {
