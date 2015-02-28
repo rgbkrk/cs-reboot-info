@@ -52,7 +52,7 @@ After you download the binary, place it anywhere on your `${PATH}` (or `%PATH%`)
 ```bash
 cs-reboot-info [--csv] username apikey
 ```
-*Username* and *apikey* are required arguments, and are the same credentials you normally use with the Rackspace Cloud API (or to log in the Cloud Control Panel).
+*Username* and *apikey* are required arguments, and are the same credentials you normally use with the Rackspace Cloud API.
 
 *--csv*: Optional, used to specify that you also want the results stored in a CSV file titled **cs-reboot-info.csv** in the same directory as the tool.
 
@@ -69,8 +69,8 @@ cs-reboot-info [--csv] username apikey
 ### Sample output: CSV
 ```
 generation, region, server_uuid, server_name, reboot_window_start_UTC, reboot_window_end_UTC, reboot_window_start_local, reboot_window_end_local
-first,DFW,d7b47a17-1552-4dcd-8b7b-831fddd73c42,MyFGServer,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00
-next,IAD,4da4a108-99c3-448a-8791-0e3fa81cbc98,MyNGServer,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00
+First Gen,DFW,d7b47a17-1552-4dcd-8b7b-831fddd73c42,MyFGServer,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00
+Next Gen,IAD,4da4a108-99c3-448a-8791-0e3fa81cbc98,MyNGServer,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00
 ```
 
 ## Building from source
