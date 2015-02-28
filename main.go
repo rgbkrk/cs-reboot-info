@@ -7,13 +7,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jrperritt/gophercloud/rackspace"
-	rsV1Servers "github.com/jrperritt/gophercloud/rackspace/compute/v1/servers"
 	"github.com/rackspace/gophercloud"
 	osV2Servers "github.com/rackspace/gophercloud/openstack/compute/v2/servers"
 	"github.com/rackspace/gophercloud/pagination"
 	rsV2Servers "github.com/rackspace/gophercloud/rackspace/compute/v2/servers"
 	"github.com/rackspace/gophercloud/rackspace/identity/v2/tokens"
+	"github.com/smashwilson/gophercloud/rackspace"
+	rsV1Servers "github.com/smashwilson/gophercloud/rackspace/compute/v1/servers"
 )
 
 const (
