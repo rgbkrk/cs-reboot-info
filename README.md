@@ -6,7 +6,7 @@ The tool source is OS independent (written in Go) and binaries are available for
 
 # How it works
 
-*cs-reboot-info* queries the Rackspace Cloud US and UK cloud infrastructures (both First and Next Generation). It identifies any Cloud Servers with a metadata key named *"rax:reboot_window"*. This key carries a value that shows the start and end times of the scheduled reboot window for the Cloud Server.
+*cs-reboot-info* queries the Rackspace Cloud Servers API in all regions your account has access to, both First and Next Generation. It identifies any Cloud Servers with a metadata key named *"rax:reboot_window"*. This key carries a value that shows the start and end times of the scheduled reboot window for the Cloud Server.
 
 The format of the metadata key is:
 
