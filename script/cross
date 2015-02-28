@@ -4,6 +4,11 @@
 
 set -e
 
+if ! which godep >/dev/null 2>&1 ; then
+  echo "Installing godep."
+  go get github.com/tools/godep
+fi
+
 if ! which gox >/dev/null 2>&1 ; then
   echo "Installing gox."
   go get github.com/mitchellh/gox
@@ -12,4 +17,5 @@ if ! which gox >/dev/null 2>&1 ; then
   echo "One-time gox setup is complete."
 fi
 
+GOPATH=`godep path`:$GOPATH
 gox -output "bin/{{.Dir}}_{{.OS}}_{{.Arch}}"
