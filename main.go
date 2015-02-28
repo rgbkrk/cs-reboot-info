@@ -22,7 +22,14 @@ const (
 )
 
 func main() {
-	outputToCSV := flag.Bool("csv", false, "Output a CSV file with the results.")
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Usage: %s [--csv] username apikey\n\n", os.Args[0])
+
+		flag.CommandLine.PrintDefaults()
+	}
+
+	outputToCSV := flag.Bool("csv", false,
+		"Output a CSV file to 'cs-reboot-info-output.csv' in the current directory.")
 	flag.Parse()
 
 	if flag.NArg() != 2 {
