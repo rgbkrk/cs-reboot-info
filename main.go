@@ -19,10 +19,12 @@ import (
 const (
 	metadataKey     = "rax:reboot_window"
 	metadataTimeFmt = "2006-01-02T15:04:05Z"
+	appVer = "0.9"
 )
 
 func main() {
 	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr,"cs-reboot-info v%s\n",appVer)
 		fmt.Fprintf(os.Stderr, "Usage: %s [--csv] username apikey\n\n", os.Args[0])
 
 		flag.CommandLine.PrintDefaults()
@@ -34,6 +36,7 @@ func main() {
 
 	if flag.NArg() != 2 {
 		fmt.Println("You must supply a username and API key as the last two arguments.")
+		flag.Usage()
 		os.Exit(1)
 	}
 
