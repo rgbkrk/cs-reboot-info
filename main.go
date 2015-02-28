@@ -22,11 +22,11 @@ const (
 )
 
 func main() {
-	outputToCSV := flag.Bool("csv", false, "Output a CSV file")
+	outputToCSV := flag.Bool("csv", false, "Output a CSV file with the results.")
 	flag.Parse()
 
 	if flag.NArg() != 2 {
-		fmt.Println("You must supply a username and API key after all other args.")
+		fmt.Println("You must supply a username and API key as the last two arguments.")
 		os.Exit(1)
 	}
 
@@ -45,12 +45,11 @@ func main() {
 
 	regions, fg := Regions(provider, opts)
 
-	fmt.Printf("Regions with a compute endpoint: %s\n", strings.Join(regions, ", "))
+	fmt.Printf("Regions with a Cloud Servers endpoint: %s\n", strings.Join(regions, ", "))
 	if fg {
-		fmt.Println("You have a first-gen endpoint, too.")
+		fmt.Println("Found both First and Next Generation endpoints.")
 	}
 
-	var numUnaffected int
 	var entries []entry
 
 	// Iterate through regions with an NG compute endpoint. Collect data about each server.
@@ -59,7 +58,7 @@ func main() {
 			Region: region,
 		})
 		if err != nil {
-			fmt.Printf("Unable to locate a v2 compute endpoint in region %s: %v\n", region, err)
+			fmt.Printf("Unable to locate a Next Gen Cloud Servers endpoint in region %s: %v\n", region, err)
 			continue
 		}
 
@@ -73,7 +72,6 @@ func main() {
 				entry, err := ConstructEntry(server, "Next Gen", region)
 				if err != nil {
 					if strings.Contains(err.Error(), "not present") {
-						numUnaffected++
 						continue
 					}
 					fmt.Printf("%s\n", err)
@@ -92,7 +90,7 @@ func main() {
 		Availability: gophercloud.AvailabilityPublic,
 	})
 	if err != nil {
-		fmt.Printf("Unable to locate a v1 compute endpoint. Skipping...\n")
+		fmt.Printf("Unable to locate a First Gen Cloud Servers endpoint. Skipping...\n")
 	} else {
 		err = rsV1Servers.List(compute, rsV1Servers.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
 			s, err := osV2Servers.ExtractServers(page)
@@ -104,7 +102,6 @@ func main() {
 				entry, err := ConstructEntry(server, "First Gen", "DFW")
 				if err != nil {
 					if strings.Contains(err.Error(), "not present") {
-						numUnaffected++
 						continue
 					}
 					fmt.Printf("%s\n", err)
@@ -125,9 +122,7 @@ func main() {
 		if *outputToCSV {
 			outputCSV(entries)
 		} else {
-			if numUnaffected > 0 {
-				fmt.Printf("%d of your servers will not require a reboot. The following %d servers will need to be rebooted", numUnaffected, len(entries))
-			}
+			fmt.Printf("The following %d Cloud Servers have an automated reboot scheduled:", len(entries))
 			outputTabular(entries)
 		}
 	}
