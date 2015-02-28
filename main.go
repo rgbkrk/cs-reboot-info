@@ -22,7 +22,7 @@ const (
 )
 
 func main() {
-	outputToCSV := *flag.Bool("csv", false, "Output a CSV file")
+	outputToCSV := flag.Bool("csv", false, "Output a CSV file")
 	flag.Parse()
 
 	if flag.NArg() != 2 {
@@ -121,13 +121,12 @@ func main() {
 		}
 	}
 
-	if numUnaffected > 0 {
-		fmt.Printf("%d of your servers will not require a reboot. The following %d servers will need to be rebooted", numUnaffected, len(entries))
-	}
-
-	if outputToCSV {
+	if *outputToCSV {
 		outputCSV(entries)
 	} else {
+		if numUnaffected > 0 {
+			fmt.Printf("%d of your servers will not require a reboot. The following %d servers will need to be rebooted", numUnaffected, len(entries))
+		}
 		outputTabular(entries)
 	}
 }
