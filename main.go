@@ -35,7 +35,7 @@ func main() {
 	flag.Parse()
 
 	if flag.NArg() != 2 {
-		fmt.Println("You must supply a username and API key as the last two arguments.")
+		fmt.Println("You must supply a username and API key as the last two arguments.\n\n")
 		flag.Usage()
 		os.Exit(1)
 	}
