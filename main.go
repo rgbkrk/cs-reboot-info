@@ -25,7 +25,7 @@ const (
 func main() {
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, "cs-reboot-info v%s\n", appVer)
-		fmt.Fprintf(os.Stderr, "Usage: %s [--csv] username apikey\n\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "Usage: %s [--csv] [--json] username apikey\n\n", os.Args[0])
 
 		flag.CommandLine.PrintDefaults()
 	}
@@ -34,6 +34,8 @@ func main() {
 		"Output a CSV file to 'cs-reboot-info-output.csv' in the current directory.")
 	outputVersion := flag.Bool("version", false,
 		"Report the version of this binary.")
+	outputToJSON := flag.Bool("json", false,
+		"Output JSON to stdout.")
 	flag.Parse()
 
 	if *outputVersion {
@@ -148,6 +150,8 @@ func main() {
 		outputTabular(entries)
 		if *outputToCSV {
 			outputCSV(entries)
+		} else if *outputToJSON {
+			outputJSON(entries)
 		}
 	}
 }
