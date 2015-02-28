@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Generate SHA1 checksums for generated binaries.
+
+set -e
+
+ROOT=$(dirname $0)/..
+cd ${ROOT}
+
+rm -f bin/*.sha1
+
+for f in bin/cs-reboot-info_*; do
+  checksum=$(shasum -p $f | awk '{print $1}')
+  echo "$checksum" > $f.sha1
+  echo "$f complete."
+done
