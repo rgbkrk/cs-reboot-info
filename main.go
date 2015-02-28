@@ -66,7 +66,8 @@ func main() {
 
 	fmt.Printf("Regions with a Cloud Servers endpoint: %s\n", strings.Join(regions, ", "))
 	if fg {
-		fmt.Println("Found both First and Next Generation endpoints.\n")
+		fmt.Println("Found both First and Next Generation endpoints.")
+		fmt.Println()
 	}
 
 	fgRegion := "DFW"
