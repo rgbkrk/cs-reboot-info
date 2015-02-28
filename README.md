@@ -25,31 +25,24 @@ The tool outputs a list of Cloud Servers that have scheduled reboot windows in a
 
 ## Installation - Binaries
 
-The *cs-reboot-info* tool is a single binary package (per platform), with no additional dependencies.  Just download and run!
-
-### Linux, Mac OS X 
-
-If you are a Linux or OS X user, you can download the binary directly from Github using the terminal:
-
-**Linux**:
-
-```bash
-wget https://raw.githubusercontent.com/rackerlabs/cs-reboot-info/master/bin/linux/cs-reboot-info
-```
-
-Or [download the binary directly](https://raw.githubusercontent.com/rackerlabs/cs-reboot-info/master/bin/linux/cs-reboot-info) and put it anywhere on your `${PATH}`.
-
-**Mac OS X**: 
-
-```bash
-curl https://raw.githubusercontent.com/rackerlabs/cs-reboot-info/master/bin/osx/cs-reboot-info -o cs-reboot-info
-```
-
-Or [download the binary directly](https://raw.githubusercontent.com/rackerlabs/cs-reboot-info/master/bin/osx/cs-reboot-info) and put it anywhere on your `${PATH}`.
-
-### Windows 
-
-If you are a Windows user, you can [download the binary](https://github.com/cs-reboot-info/bin/windows/cs-reboot-info) and run it from *cmd.exe*.
+| Plaform        | Download links |
+| -------------- | -------------- |
+| Windows 386    | [`cs-reboot-info_windows_386.exe`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_windows_386.exe) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_windows_386.exe.sha1)) |
+| Windows AMD64  | [`cs-reboot-info_windows_amd64.exe`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_windows_amd64.exe) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_windows_amd64.exe.sha1)) |
+| Mac OS X 386   | [`cs-reboot-info_darwin_386`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_darwin_386) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_darwin_386.sha1)) |
+| Mac OS X AMD64 | [`cs-reboot-info_darwin_amd64`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_darwin_amd64) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_darwin_amd64.sha1)) |
+| FreeBSD 386    | [`cs-reboot-info_freebsd_386`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_freebsd_386) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_freebsd_386.sha1)) |
+| FreeBSD AMD64  | [`cs-reboot-info_freebsd_amd64`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_freebsd_amd64) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_freebsd_amd64.sha1)) |
+| FreeBSD ARM    | [`cs-reboot-info_freebsd_arm`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_freebsd_arm) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_freebsd_arm.sha1)) |
+| Linux 386      | [`cs-reboot-info_linux_amd64`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_linux_386) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_linux_386.sha1)) |
+| Linux AMD64    | [`cs-reboot-info_linux_amd64`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_linux_amd64) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_linux_amd64.sha1)) |
+| Linux ARM      | [`cs-reboot-info_linux_arm`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_linux_arm) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_linux_arm.sha1)) |
+| NetBSD 386     | [`cs-reboot-info_netbsd_386`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_netbsd_386) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_netbsd_386.sha1)) |
+| NetBSD AMD64   | [`cs-reboot-info_netbsd_amd64`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_netbsd_amd64) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_netbsd_amd64.sha1)) |
+| NetBSD ARM     | [`cs-reboot-info_netbsd_arm`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_netbsd_arm) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_netbsd_arm.sha1)) |
+| OpenBSD 386    | [`cs-reboot-info_openbsd_386`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_openbsd_386) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_openbsd_386.sha1)) |
+| OpenBSD AMD64  | [`cs-reboot-info_openbsd_amd64`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_openbsd_amd64) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_openbsd_amd64.sha1)) |
+| Plan 9 386     | [`cs-reboot-info_plan9_386`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_plan9_386) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_plan9_386.sha1)) |
 
 ## Using the tool
 
