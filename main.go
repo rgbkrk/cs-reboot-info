@@ -121,13 +121,15 @@ func main() {
 		}
 	}
 
-	if *outputToCSV {
-		outputCSV(entries)
-	} else {
-		if numUnaffected > 0 {
-			fmt.Printf("%d of your servers will not require a reboot. The following %d servers will need to be rebooted", numUnaffected, len(entries))
+	if len(entries) > 0 {
+		if *outputToCSV {
+			outputCSV(entries)
+		} else {
+			if numUnaffected > 0 {
+				fmt.Printf("%d of your servers will not require a reboot. The following %d servers will need to be rebooted", numUnaffected, len(entries))
+			}
+			outputTabular(entries)
 		}
-		outputTabular(entries)
 	}
 }
 
