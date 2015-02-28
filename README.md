@@ -44,6 +44,8 @@ The tool outputs a list of Cloud Servers that have scheduled reboot windows in a
 | OpenBSD AMD64  | [`cs-reboot-info_openbsd_amd64`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_openbsd_amd64) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_openbsd_amd64.sha1)) |
 | Plan 9 386     | [`cs-reboot-info_plan9_386`](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_plan9_386) ([SHA1](https://a4fae0f0d6cf4cc92acd-d6ce857812540f8fb39144d83ca6538f.ssl.cf5.rackcdn.com/cs-reboot-info_plan9_386.sha1)) |
 
+After you download the binary, place it anywhere on your `${PATH}` (or `%PATH%`) and rename it to `cs-reboot-info`. On Mac or Linux, you'll also need to `chmod +x cs-reboot-info` to make it executable.
+
 ## Using the tool
 
 **Usage:**
