@@ -4,25 +4,6 @@ This is a Rackspace tool to identify Cloud Servers that have a scheduled automat
 
 The tool source is OS independent (written in Go) and binaries are available for Windows, Mac OS X, and Linux.
 
-# How it works
-
-*cs-reboot-info* queries the Rackspace Cloud Servers API in all regions your account has access to, both First and Next Generation. It identifies any Cloud Servers with a metadata key named *"rax:reboot_window"*. This key carries a value that shows the start and end times of the scheduled reboot window for the Cloud Server.
-
-The format of the metadata key is:
-
-```
-| Key               | Value  (example)                          |
-|-------------------|-------------------------------------------|
-| rax:reboot_window | 2014-01-28T00:00:00Z;2014-01-28T03:00:00Z |
-```
-
-The value is a semi-colon separated time range, in UTC format.
-
-The tool outputs a list of Cloud Servers that have scheduled reboot windows in a tabular format. Results can optionally be saved to a CSV file.
-
-**Note:** Only Cloud Servers with a scheduled reboot window will be listed. If a Cloud Server is not listed, no automated reboots are scheduled for it.
-
-
 ## Installation - Binaries
 
 | Plaform        | Download links |
@@ -97,3 +78,23 @@ godep go install .
 script/cross
 script/checksum
 ```
+
+# How it works
+
+*cs-reboot-info* queries the Rackspace Cloud Servers API in all regions your account has access to, both First and Next Generation. It identifies any Cloud Servers with a metadata key named *"rax:reboot_window"*. This key carries a value that shows the start and end times of the scheduled reboot window for the Cloud Server.
+
+The format of the metadata key is:
+
+```
+| Key               | Value  (example)                          |
+|-------------------|-------------------------------------------|
+| rax:reboot_window | 2014-01-28T00:00:00Z;2014-01-28T03:00:00Z |
+```
+
+The value is a semi-colon separated time range, in UTC format.
+
+The tool outputs a list of Cloud Servers that have scheduled reboot windows in a tabular format. Results can optionally be saved to a CSV file.
+
+**Note:** Only Cloud Servers with a scheduled reboot window will be listed. If a Cloud Server is not listed, no automated reboots are scheduled for it.
+
+
