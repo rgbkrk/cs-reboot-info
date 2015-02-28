@@ -50,6 +50,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	provider.UserAgent.Prepend("cs-reboot-info/1.0")
+
 	regions, fg := Regions(provider, opts)
 
 	fmt.Printf("Regions with a Cloud Servers endpoint: %s\n", strings.Join(regions, ", "))
