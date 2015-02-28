@@ -43,15 +43,15 @@ cs-reboot-info [--csv] username apikey
 ```
 | Type            | Server ID                            | Server Name          | Reboot Window (UTC)         | Reboot Window (Local)       |
 | --------------- | ------------------------------------ | -------------------- | --------------------------- | --------------------------- |
-| First Gen (IAD) | 8c65cb68-0681-4c30-bc88-6b83a8a26aee | Gophercloud-pxpGGuey | 01 Jan 00:00 - 01 Jan 00:00 | 01 Jan 01:00 - 01 Jan 01:00 |
-| First Gen (IAD) | 8c65cb68-0681-4c30-bc88-6b83a8a26aee | Gophercloud-pxpGGuey | 01 Jan 00:00 - 01 Jan 00:00 | 01 Jan 01:00 - 01 Jan 01:00 |
+| First Gen (DFW) | d7b47a17-0681-4dcd-bc88-831fddd73c42 | MyFGServer           | 02 Mar 23:00 - 03 Mar 01:00 | 03 Mar 02:00 - 03 Mar 04:00 |
+| Next Gen (IAD)  | 8c65cb68-0681-4c30-bc88-6b83a8a26aee | MyNGServer           | 03 Mar 01:30 - 03 Mar 03:30 | 03 Mar 04:30 - 03 Mar 06:30 |
 ```
 
 ### Sample output: CSV
 ```
 generation, region, server_uuid, server_name, reboot_window_start_UTC, reboot_window_end_UTC, reboot_window_start_local, reboot_window_end_local
-First Gen,DFW,d7b47a17-1552-4dcd-8b7b-831fddd73c42,MyFGServer,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00
-Next Gen,IAD,4da4a108-99c3-448a-8791-0e3fa81cbc98,MyNGServer,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00,01 Jan 00:00
+First Gen,DFW,d7b47a17-0681-4dcd-bc88-831fddd73c42,MyFGServer,02 Mar 23:00,03 Mar 01:00,03 Mar 02:00,03 Mar 04:00
+Next Gen,IAD,4da4a108-99c3-0681-bc88-0e3fa81cbc98,MyNGServer,03 Mar 01:30,03 Mar 03:30,03 Mar 04:30,03 Mar 06:30
 ```
 
 ## Building from source
