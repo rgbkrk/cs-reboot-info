@@ -80,15 +80,20 @@ Next Gen,IAD,4da4a108-99c3-448a-8791-0e3fa81cbc98,MyNGServer,01 Jan 00:00,01 Jan
 * A working [Go installation](https://golang.org/doc/install).
 * A healthy [Go workspace](https://golang.org/doc/code.html#Organization).
 
-Clone the github repo as normal, and run:
+Then run:
 
 ```bash
+# Install godep to manage dependencies
+go get github.com/tools/godep
+
 go get github.com/rackerlabs/cs-reboot-info
 cd ${GOPATH}/src/github.com/rackerlabs/cs-reboot-info
 
-# Fetch dependencies into your ${GOPATH}
-go get .
-
 # Build and install the binary to ${GOPATH}/bin
-go install .
+godep go install .
+
+# OR: cross-compile to build binaries for everything and compute their checksums to bin/.
+# If script/cross dies, make sure you have Make (build-essential equivalent) installed.
+script/cross
+script/checksum
 ```
