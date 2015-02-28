@@ -1,9 +1,6 @@
 {
 	"ImportPath": "github.com/rackerlabs/cs-reboot-info",
 	"GoVersion": "go1.4",
-	"Packages": [
-		"."
-	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/mitchellh/mapstructure",
@@ -15,9 +12,8 @@
 			"Rev": "e056d641a79da54db40c3b4b934f6e02594b88cc"
 		},
 		{
-			"ImportPath": "github.com/smashwilson/gophercloud/rackspace",
-			"Comment": "v0.1.0-1440-ge056d64",
-			"Rev": "e056d641a79da54db40c3b4b934f6e02594b88cc"
+			"ImportPath": "github.com/smashwilson/gophercomputev1",
+			"Rev": "7da8ee8d9017ba1b86f727382516fad1a2e712d1"
 		}
 	]
 }
