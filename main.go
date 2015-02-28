@@ -62,6 +62,11 @@ func main() {
 		fmt.Println("Found both First and Next Generation endpoints.")
 	}
 
+	fgRegion := "DFW"
+	if len(regions) == 1 && regions[0] == "LON" {
+		fgRegion = "LON"
+	}
+
 	var entries []entry
 
 	// Iterate through regions with an NG compute endpoint. Collect data about each server.
@@ -111,7 +116,7 @@ func main() {
 			}
 
 			for _, server := range s {
-				entry, err := ConstructEntry(server, "First Gen", "DFW")
+				entry, err := ConstructEntry(server, "First Gen", fgRegion)
 				if err != nil {
 					if strings.Contains(err.Error(), "not present") {
 						continue
