@@ -131,11 +131,10 @@ func main() {
 	}
 
 	if len(entries) > 0 {
+		fmt.Printf("There are %d Cloud Servers with an automated reboot scheduled.", len(entries))
+		outputTabular(entries)
 		if *outputToCSV {
 			outputCSV(entries)
-		} else {
-			fmt.Printf("The following %d Cloud Servers have an automated reboot scheduled:", len(entries))
-			outputTabular(entries)
 		}
 	}
 }
